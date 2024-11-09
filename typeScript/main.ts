@@ -1,1 +1,1 @@
-console.log('안녕 타입스크립트!');
+let size:number = 100;
