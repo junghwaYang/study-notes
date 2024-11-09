@@ -55,3 +55,21 @@ let membersOnly: boolean = true;
 let owner: undefined = undefined;
 let seller: null = null;
 ```
+
+### 배열과 튜플
+- 배열의 타입을 지정해줄때는 아래와 같이 작성해준다.
+```typescript
+const cart: strong[] = [];
+const carts string[][] = [
+  ['c001', 'c002'],
+  ['c003'],
+];
+```
+- 위는 배열의 크기가 정해지지않았지만, 아래는 배열의 크기를 정하고 싶을때 사용한다 -> 튜플 타입
+```typescript
+let mySize: [number, number] = [167, 28];
+```
+- 튜플의 경우 모든 요소가 같은 타입일 필요는 없다.
+```typescript
+let mySize: [number, number, string] = [167, 28, '홍길동'];
+```
