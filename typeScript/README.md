@@ -73,3 +73,35 @@ let mySize: [number, number] = [167, 28];
 ```typescript
 let mySize: [number, number, string] = [167, 28, '홍길동'];
 ```
+
+### 객체 타입 정하기
+- 객체는 기존에 ,(콤마)를 쓰는게 아닌 ;(콜론)을 사용한다.
+```typescript
+let product: {
+  id: string;
+  name: string;
+  price: number;
+  membersOnly: boolean;
+  sizes: string[];
+} = {
+  // 여기서 cmd + I를 입력하면 알아서 이름을 추천해준다.
+}
+```
+- 필수가 아닌 프로퍼티는 옵셔널(?)을 이용해서 표현한다.
+```typescript
+let product: {
+  id: string;
+  name: string;
+  price: number;
+  membersOnly?: boolean;
+  sizes: string[];
+} = {
+  
+}
+```
+- 객체 프로퍼티의 키네임을 지정하고싶지 않을때는 타입만 지정하게끔 작성도 가능하다.
+```typescript
+let stock : {
+  [id: string]: number; // 여기서 id는 어떤 이름이 들어가든 상관없다.
+}
+```
