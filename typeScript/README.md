@@ -193,7 +193,7 @@ function addManyToCart(...id: string[]){
   }
 }
 ```
-- 함수 자체에 타입을 지정할 때
+- 함수를 값으로 이용하는 경우
 - > 위와 같이 함수 자체에 타입을 지정해주면된다. rest 파라미터의 경우는 항상 배열로 오기때문에 배열타입으로 지정해줘야한다.
 ```typescript
 const mall: {
