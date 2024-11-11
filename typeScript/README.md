@@ -213,3 +213,51 @@ const mall: {
 ```
 - `void` 타입이란?
 - > `void` 타입은 리털하는 값이 없을때 사용하는 타입이이다. 즉, 위 `addManyCart`는 리턴 하는 값이 없기때문에 없다는 표현인 `void`를 사용해주어야한다.
+
+### Enum
+- Enum이란 값의 종류를 나열할때 사용된다. 열거 타입이라고도 한다.
+- 예제
+```typescript
+let product: {
+  id: string;
+  name: string;
+  price: number;
+  membersOnly?: boolean;
+  sizes: string[];
+} = {
+  id: 'c001',
+  name: '후드티',
+  price: 129000,
+  sizes: ['M','L'],
+}
+```
+- 위 예제처럼 sizes의 값이 문자열 배열로 지칭하기에 너무 범위가 광범위 할때, 값을 지정해서 나열해주고 싶을때 사용하면 된다.
+- 사용 예제
+```typescript
+// 1. 이렇게 enum으로 객체형식으로 나열을 해서
+enum Size: {
+  S, M, L, XL,
+}
+
+let product: {
+  id: string;
+  name: string;
+  price: number;
+  membersOnly?: boolean;
+  sizes: Size[]; // 2. 배열 타입을 지정하듯 작성해준다
+} = {
+  id: 'c001',
+  name: '후드티',
+  price: 129000,
+  sizes: [Size.M, Size.L], // 3. 접근할때는 객체 접근 때 처럼 점 표기법을 이용해서 접근이 가능하다.
+}
+```
+- 다만, 주의할 점으로는 해당 enum의 값을 실행시켜보면 `console.log(Size.S..L)` 결과값이 0부터 정수로 지정이 된다.
+- 그렇기 때문에 해당 enum의 조건식을 사용하게 될 경우 '0'은 false에 해당하기 때문에 예상했던 output과 다르게 출력 될 수있다.
+- 이를 방지 하기 위해서는 확실하게, 해당 값을 정해놓고 쓰는 것이 좋다.
+```typescript
+enum Size: {
+  // =(이퀄)을 이용하여, 값을 지정해주자.
+  S = 'S', M = 'M', L = 'L', XL = 'XL',
+}
+```
