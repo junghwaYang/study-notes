@@ -105,3 +105,33 @@ let stock : {
   [id: string]: number; // 여기서 id는 어떤 이름이 들어가든 상관없다.
 }
 ```
+
+### any
+- any라는 타입은 명시적으로 타입을 지정할 수 없을때 사용하며 JS와 같은 형태로 타입을 검사하지않는 상태로 만들 때 사용이 된다. 그렇다고해서 typescript 자체가 타입 검사를 위해 사용되는 문법이기에 any를 자주 사용하는 것은 좋지 않다. 하지만 어쩔 수 없이 any 타입으로 받아야하는 경우가 생긴다.
+- any 타입 인 경우 예시
+```typescript
+const parsedProduct = JSON.parse(
+  '{"name": "상품명", "price": 12000}'
+)
+
+```
+- 위와 같이 JSON 문자열을 파싱하는 경우에는 어떤 타입이 들어올지 정확히 판별할수 없기에, 자동으로 any 타입이 배졍 받는다.
+- 그렇기 때문에 위 JSON 문자열 파싱의 경우는 `as`를 이용하여, 타입을 명시적으로 지정해주거나, :(콜론)을 이용하여, 타입을 지정해주어야 한다.
+- :(콜론) 예시
+```typescript
+const parsedProduct: {
+  name: string;
+  price: number;
+} = JSON.parse(
+  '{"name": "상품명", "price": 12000}'
+)
+```
+- `as` 예시 
+```typescript
+const parsedProduct = JSON.parse(
+  '{"name": "상품명", "price": 12000}'
+) as {
+  name: string;
+  price: number;
+}
+```
