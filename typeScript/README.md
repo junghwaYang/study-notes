@@ -135,3 +135,81 @@ const parsedProduct = JSON.parse(
   price: number;
 }
 ```
+
+### 함수에 타입 정의하기
+- 예제 코드
+```typescript
+// 상품명(키)과 재고수를 나타내는 파라미터 객체
+const stock: {[id : string]: number} = {
+  c001: 3,
+  c002: 1,
+};
+// 사용자에게 담아서 보여줄 cart 배열
+const cart: string[] = [];
+```
+- 함수 예제
+```typescript
+function addToCart (id: string, quantity: number):boolean {
+  if(stock[id] < quantity){
+    return false;
+  }
+
+  stock[id] -= quantity;
+  for(let i = 0; i < quantity; i++){
+    cart.push(id);
+  }
+
+  return true;
+}
+```
+- 기본적으로 선언한 함수의 파라미터에 타입을 정해줄때는 직접 넣어주면 된다.
+- :(콜론)뒤에는 리턴되는 값의 타입을 넣어주면 된다.
+- 지금은 `return` 되는 값을 미리 `boolean`으로 명시가 되어있기때문에 사실 리턴되는 값의 타입을 지정해줄 필요는 없다.
+> 여기서 추가적으로 `quantity`라는 파라미터를 쓸 수도 있고 안 쓸수도 있다고 할 경우, `quantity?: number` 옵셔널을 이용해서 작성해주면 되는데, 이때 해당 값이 없을 경우, 기본값을 지정해줄 필요가 있다.
+> 함수 파라미터의 기본값을 정해줄때는 `quantity?: number = 1`과 같은 식으로 기본 값을 지정해주면 된다.
+- 위 예제는 선언한 함수의 타입을 지정해줄 때 사용하는 방식이라 함은, 아래는 객체에서 함수 메서드에 타입을 지정해주는 예시를 보여주겠다
+```typescript
+// 새로 생성한 mall이라는 객체
+const mall: {
+  stock: {[id: string] : number};
+  cart: string[];
+  addToCart: (id: string, quantity?: number) => boolean; // 이렇게 stock이라는 객체의 메서드로 addToCard 함수의 타입을 지정해주었다. 일반 익명 함수를 사용하듯이 사용하면 되며, 화살표 함수의 리턴값도 동일하게 타입으로 지정해주면 된다.
+} = {
+  // 아래는 기본값 지정
+  stock: {
+    c001: 3,
+    c002: 1,
+  },
+  cart: [],
+  addToCart,
+};
+```
+- rest 파라미터를 사용하는 경우에 타입 지정하기
+> 아래는 선언된 rest 파라미터에 타입을 지정해주는 방식이다.
+```typescript
+function addManyToCart(...id: string[]){
+  for(const id of ids){
+    addToCart(id);
+  }
+}
+```
+- 함수 자체에 타입을 지정할 때
+- > 위와 같이 함수 자체에 타입을 지정해주면된다. rest 파라미터의 경우는 항상 배열로 오기때문에 배열타입으로 지정해줘야한다.
+```typescript
+const mall: {
+  stock: {[id: string] : number};
+  cart: string[];
+  addToCart: (id: string, quantity?: number) => boolean;
+  addManyToCard: (...ids: string[]) => void;
+} = {
+  stock: {
+    c001: 3,
+    c002: 1,
+  },
+  cart: [],
+  addToCart,
+  addManyToCard,
+};
+```
+- `void` 타입이란?
+- > `void` 타입은 리털하는 값이 없을때 사용하는 타입이이다. 즉, 위 `addManyCart`는 리턴 하는 값이 없기때문에 없다는 표현인 `void`를 사용해주어야한다.
