@@ -261,3 +261,58 @@ enum Size: {
   S = 'S', M = 'M', L = 'L', XL = 'XL',
 }
 ```
+
+### interface
+- 반복되는 타입을 여러번 지정해줄 필요없이, interface를 통해 커스텀 타입을 지정할 수 있다.
+- 아래와 같이 사용할 경우 문자열 타입과, 숫자형 타입처럼 또다른 Product 타입 이라는 것을 생성한 것이다.
+```typescript
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  membersOnly?: boolean;
+}
+
+// 사용 시에도 일반 타입을 지정할때 처럼 interface의 타입을 작성 해주면 된다.
+const product: Product = {
+  id: 'c001',
+  name: '후드티',
+  price: 129000,
+}
+// 함수도 동일하다.
+function printProduct(product: Product){
+  console.log(`${product.name}의 가격은 ${product.price}원 입니다.`);
+}
+```
+- interface의 상속
+```typescript
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  membersOnly?: boolean;
+}
+
+// 아래와 같이 Product 타입에 ClothingProduct라는 추가 타입을 extends를 통해 Product에 상속 시켜 주었다.
+interface ClothingProduct extends Product {
+  sizes: Size[];
+}
+
+
+const product: ClothingProduct = {
+  id: 'c001',
+  name: '후드티',
+  price: 129000,
+  sizes: [Size.M, Size.L], // 위 예제들의 enum을 통해 만들어진 객체를 인용
+}
+
+// interface는 함수에 대한 타입도 지정할 수 있는데, 익명함수로 파라미터의 타입을 지정해주고, 리턴의 타입도 지정해주면 된다.
+interface PrintProductFunction {
+  (product: Product) : void;
+}
+
+// 지정한 함수 타입을 사용할때는 이런식으로 간략하게 사용이 가능하다.
+const printProduct : PrintProductFunction = (product) => {
+  console.log(`${product.name}의 가격은 ${product.price}원 입니다.`);
+}
+```
