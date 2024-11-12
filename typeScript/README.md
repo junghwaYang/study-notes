@@ -345,3 +345,62 @@ interface Product {
 - 일반적으로 문자열의 배열을 담는 타입이라고 가정했을 경우, `exports`를 통해 확장된 타입이 있다고 가정해보자.
 - 확장된 타입은 공통된 파라미터를 가지고있고, 그외에 다른 부분이 있는데 공통된 부분을 구분해서 쓰고싶을때 `a | b` 이런식으로 a 또는 b를 지정해주는 것을 유니온 타입이라고 한다.
 - 일반적인 변수 타입에 사용하기보다는 리터럴 타입에서 사용된다.
+
+### Intersection 타입
+- 여러 객체 타입을 합치는 것을 `intersection` 타입이라고 한다.
+- 에제(Intersection 사용 전)
+```typescript
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  membersOnly?: boolean;
+}
+
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface Review {
+  id: string;
+  productId: string;
+  userId: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+- 이렇게 공통되는 타입들이 있을 경우에는 `interface`를 `type`으로 바꿔주고, 공통으로 사용할 `type`을 `interface`로 지정해준 후 재사용한다.
+- 에제(Intersection 사용 후)
+```typescript
+interface Id {
+  id: string;
+}
+
+interface Timestamp {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+type Product = Id &  {
+  name: string;
+  price: number;
+  membersOnly?: boolean;
+}
+
+type User = Id & Timestamp {
+  username: string;
+  email: string;
+}
+
+type Review = Id & Timestamp {
+  productId: string;
+  userId: string;
+  content: string;
+}
+```
+> `interface`의 상속을 이용해서 표현 해줄 수도 있지만, `intersection`과 `interface의 상속`의 비교에 대해서는 후에 다루도록 하겠다.
