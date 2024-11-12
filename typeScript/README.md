@@ -316,3 +316,12 @@ const printProduct : PrintProductFunction = (product) => {
   console.log(`${product.name}의 가격은 ${product.price}원 입니다.`);
 }
 ```
+
+### 리터럴 타입
+- 값 그 자체를 타입으로 가지는 것
+- 예제
+```typescript
+let productName = '후드티';
+const productName2 = '맨투맨';
+```
+- 위 예제를 타입 스크립트로 작성하고보면 `let`의 경우는 재할당이 가능한 변수이기에 `string`으로 타입이 추론되며, `const`는 재할당이 불가하기때문에 '맨투맨' 이라는 값 자체를 타입으로 가지게 된다.
