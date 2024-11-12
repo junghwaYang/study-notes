@@ -325,3 +325,17 @@ let productName = '후드티';
 const productName2 = '맨투맨';
 ```
 - 위 예제를 타입 스크립트로 작성하고보면 `let`의 경우는 재할당이 가능한 변수이기에 `string`으로 타입이 추론되며, `const`는 재할당이 불가하기때문에 '맨투맨' 이라는 값 자체를 타입으로 가지게 된다.
+
+### 타입 별칭
+- 타입 별칭은 선언된 변수에 값을 타입으로 지정해주는 것이 아닌, 타입 그 자체를 변수명처럼 지정해서 사용하는 것을 뜻한다.
+- 이 타입 별칭은 변수, 함수, 객체에도 동일하게 사용이 가능하지만 객체의 경우는 `interface`를 쓰는걸 추천한다.
+- 타입 별칭을 지정해줄때는 앞 첫글짜를 대문자로 작성하는것 원칙이다.
+- 예제
+```typescript
+type Cart = string[];
+type CartResultCallback = (result: boolean) => void;
+interface Product {
+  id: string;
+  name: string;
+}
+```
