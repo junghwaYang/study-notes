@@ -439,3 +439,96 @@ const num = 123;
 type NumType = typeof num; // NumType은 'number' 타입
 
 ```
+
+### 제네릭 타입
+- 타입 변수를 사용하는 타입이다. 타입 변수는 마치 함수의 매개변수처럼 어떤 타입이든 받아들일 수 있는 변수 역할을 한다. 
+1. 기본적인 제네릭 타입
+```typescript
+type Box<T> = {
+  value: T;
+};
+
+// 타입을 지정해주지않아도 알아서 타입을 추론 해준다.
+const numberBox: Box = { value: 123 }; // 'number' 타입 추론
+const stringBox: Box = { value: "Hello" }; // 'string' 타입 추론
+// 선언할때 타입을 지정한다.
+const numberBox: Box<number> = { value: 123 }; // 'number' 타입 지정
+const stringBox: Box<string> = { value: "Hello" }; // 'string' 타입 지정
+```
+2. 제네릭 인터페이스
+```typescript
+// Pair<T, U>는 두 개의 제네릭 타입 변수를 받는 인터페이스입니다.
+interface Pair<T, U> {
+  first: T;
+  second: U;
+}
+
+// numberPair는 number 타입의 값 두 개를 가지는 객체이고, mixedPair는 string과 boolean 타입의 값을 가집니다.
+const numberPair: Pair<number, number> = { first: 1, second: 2 };
+const mixedPair: Pair<string, boolean> = { first: "key", second: true };
+```
+3. 제네릭 타입 별칭
+```typescript
+// Result<T>는 data의 타입이 T로 지정된 제네릭 타입 별칭입니다.
+type Result<T> = {
+  success: boolean;
+  data: T;
+};
+
+// successResult는 string 타입의 데이터를 가지고, errorResult는 null 타입의 데이터를 가집니다.
+const successResult: Result<string> = { success: true, data: "Completed" };
+const errorResult: Result<null> = { success: false, data: null };
+
+```
+4. 제네릭 제약 조건
+- 제네릭 타입에 제약 조건을 추가하여 특정 타입만 허용하도록 할 수 있다.
+```typescript
+type Lengthwise = {
+  length: number;
+};
+
+// T extends Lengthwise: T는 Lengthwise 타입을 확장해야 합니다. 즉, length 프로퍼티를 가져야 합니다.
+// logLength 함수는 length 프로퍼티가 있는 타입만 받을 수 있습니다.
+function logLength<T extends Lengthwise>(arg: T): void {
+  console.log(arg.length);
+}
+
+logLength({ length: 10 }); // 출력: 10
+logLength("Hello"); // 출력: 5
+// logLength(123); // 오류: 'number' 타입에는 'length' 프로퍼티가 없습니다.
+
+```
+5. 제네릭 타입의 기본값
+```typescript
+// Response<T = string>: T의 기본값을 string으로 지정했습니다.
+type Response<T = string> = {
+  data: T;
+  error: string | null;
+};
+
+const response1: Response<number> = { data: 42, error: null };
+// response2는 string 타입의 data를 가지며, 타입을 명시적으로 지정하지 않아도 기본값이 적용됩니다.
+const response2: Response = { data: "Hello", error: null }; // 기본값 'string' 사용
+
+```
+6. 제네릭 유틸리티 타입 예시
+- Partial (모든 프로퍼티를 선택적으로 만든다.)
+```typescript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+type PartialUser = Partial<User>;
+
+const user: PartialUser = { id: 1 }; // 'name'과 'email'이 없어도 오류가 없습니다.
+```
+- Readonly (모든 프로퍼티를 읽기 전용으로 만든다.)
+```typescript
+type ReadonlyUser = Readonly<User>;
+
+const readonlyUser: ReadonlyUser = { id: 1, name: "Alice", email: "alice@example.com" };
+// readonlyUser.name = "Bob"; // 오류: 읽기 전용 프로퍼티는 수정할 수 없습니다.
+
+```
