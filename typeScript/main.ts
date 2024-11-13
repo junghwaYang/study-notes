@@ -242,7 +242,7 @@ const item1: Weapon & Armor = {
 printEquipment(item1); */
 
 // 유니온 타입 퀴즈(팀미팅)
-interface 농산물 {
+/* interface 농산물 {
   이름 : string;
 }
 
@@ -268,3 +268,30 @@ function 농산물정보 (농산물이름: 당도 | 채소여부 ){
 
 농산물정보(사과);   // "사과는 과일입니다."
 농산물정보(시금치); // "시금치는 채소입니다."
+ */
+
+// 아이템 정보 출력하기 (keyof 연산자)
+
+interface Item {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+}
+
+const itemTable: [keyof Item, string][] = [
+  ['name', '이름'],
+  ['price', '가격'],
+  ['description', '설명'],
+];
+
+const item: Item = {
+  id: 'h001',
+  name: '힐링 포션',
+  price: 200,
+  description: '마시면 체력을 50 회복한다.',
+};
+
+for (let [propertyKey, propertyName] of itemTable) {
+  console.log(`${propertyName} | ${item[propertyKey]}`);
+}
