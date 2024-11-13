@@ -733,3 +733,10 @@ function addToCart(id: string, quantity: number = 1): boolean {
 type AddToCartResult = ReturnType<typeof addToCart>;
 // type AddToCartResult = boolean
 ```
+
+### 모듈 사용하기
+- typescript는 별다른 설정을 해주지않으면, 내가 생성한 ts파일과 동일한 경로 루트에 빌드된 js파일이 그대로 저장되게 된다.
+- 이렇게 빌드된 js 파일과 ts파일이 같이 있다면, 나중에는 프로젝트가 커지면 커질 수록 파일 관리가 힘들것이고 이런 부분을 해결하기 위해 tsconfig.json을 이용하여 설정해 줄 수 있다.
+1. `"outDir": "./"`
+기본적으로 설정되어있는 경로인 outDir은 빌드한 파일들을 모아놓을 경로를 지정할 수 있다. 빌드된 파일은 dist 폴더에 모아놓는것이 일반적이기에
+`"outDir": "./dist"`라고 수정한 후 build를 진행한다.
