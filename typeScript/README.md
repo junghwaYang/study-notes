@@ -755,3 +755,29 @@ type AddToCartResult = ReturnType<typeof addToCart>;
 - 해당 옵션은 컴파일 하는 파일들의 공통된 조상폴더를 찾아서 그 경로를 기본값으로 가진다.
 - 해당 옵션을 활성화 할 경우 프로젝트 디렉토리를 기준으로 폴더구조를 생성하기 때문에 `dist/src/...` 와 같은 구조로 컴파일 되게 된다.
 - 대체적으로 src경로까지 필요가 없을 경우 `"rootDir": "./src"`로 지정을 하게 되면 src경로 안에있는 폴더구조를 따라 `dist`에 폴더 구조를 따라 컴파일 하게 된다.
+### 꼭 알아야 할 컴파일러 옵션들
+1. `target`: 어떤 ECMAScript 버전으로 변환할지
+- [웹 브라우저 별 지원 여부 참고 사이트](https://caniuse.com/?search=ECMAScript)
+2. `module`: 어떤 방식으로 모듈을 만들지
+- 자바스크립트 모듈에는 크게 두 가지 방식이 있습니다. ES6부터 도입된 import/export 문법을 사용하는 ESM(ECMAScript Module) 방식이 있고요, Node.js 같은 데서 기본적으로 사용하는 CJS(CommonJS) 방식이 있는데요.
+이 옵션에서는 자바스크립트 코드로 트랜스파일할 때 어떤 모듈 문법으로 변환할지 선택할 수 있습니다. 다양한 옵션 값을 지원하는데요. ESM을 쓰시려면 es6, es2020 같이 es로 시작하는 값을 쓰면 되고, CJS를 쓰시려면 commonjs라고 쓰시면 됩니다.
+보통 Node.js 환경에서는 CJS를 사용하고, 프론트엔드 개발을 할 때는 보통 번들러에서 모듈을 알아서 처리해 주기 때문에 ESM, CJS 상관없이 쓰실 수 있을 겁니다. 어떤 걸 선택할지 잘 모르겠다면 commonjs로 설정하는 걸 추천드릴게요.
+3. `esModuleInterop`: ES 모듈을 안전하게 사용
+- ESM 문법에서 import * as moment from 'moment'라든가 import moment from 'moment'라는 문법은 서로 다른데요. 이 옵션을 false로하면 CJS로 변환했을 때 두 코드는 같은 형태의 코드 const moment = require('moment')로 변환됩니다. 안전하게 모듈을 사용하려면 esModuleInterop 옵션은 true로 해놓는 것을 권장드립니다. [(참고)](https://www.typescriptlang.org/tsconfig/#esModuleInterop)
+4. `forceConsistentCasingInFileNames`: 파일의 대소문자 구분하기
+- macOS를 사용하시는 분들은 main.ts라는 파일과 Main.ts라는 파일이 서로 다른데요. Windows와 같이 어떤 운영체제에서는 종종 main.ts라는 파일과 Main.ts라는 파일을 동일하게 취급하기도 합니다. 이런 환경에서 개발하더라도 반드시 대소문자 구분을 명확하게 하겠다는 옵션입니다. 이 옵션도 반드시 true로 해 놓는 걸 권장드립니다.
+5. `strict`: 엄격한 규칙들 켜기
+- `noImplicitAny` : 기존 자바스크립트 코드처럼 타입 없이 사용
+- 새로 시작하는 타입스크립트 프로젝트라면 무조건 켜는 걸 추천드리지만, 기존에 자바스크립트로 만든 프로젝트를 타입스크립트로 옮기는 중이라면 이 옵션을 잠시 끄는 것도 좋습니다. 아래처럼 설정하면 strict 규칙들을 한꺼번에 설정하지만 noImplicitAny는 설정하지 않을 수 있습니다.
+```json
+"strict": true,
+"noImplicitAny": false,
+```
+- `strictNullChecks` : null이 될 가능성이 있다면, 이런 경우를 반드시 처리하도록 하는 옵션입니다. 이것도 되도록이면 켜 놓으시는 걸 추천합니다.
+6. `skipLibCheck`: 설치한 패키지의 타입 검사하지 않기
+- node_modules 폴더에 설치된 패키지들의 타입 검사를 하지 않는 옵션입니다. 패키지 개발 과정에서 대부분 타입 검사가 이뤄지기 때문에, 중복으로 하지 않아도 됩니다. 그래서 이 옵션을 사용하시길 추천드립니다.
+7. `rootDir`: 최상위 폴더
+8. `outDir`: 자바스크립트 파일을 생성할 폴더
+9. `resolveJsonModule`: JSON 파일 임포트하기
+10. `include`와 `exclude`
+11. 그 밖의 타입은 [타입스크립트 공식 문서 참고](https://www.typescriptlang.org/tsconfig/)
