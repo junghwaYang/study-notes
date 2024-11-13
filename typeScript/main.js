@@ -18,15 +18,15 @@ console.log(
     `${skill ? `가진 능력은 ${skill} 이고 \n` : ''}` +
     `${area ? `출현 지역은 ${area} 입니다.` : ''}`
 ); */
-function printEquipment(equipment) {
-    console.log(`이름: ${equipment.name}`);
-    console.log(`이 장비는 공격력을 ${equipment.attack}, 방어력을 ${equipment.defence} 증가 시킵니다.`);
+const 사과 = { 이름: "사과", 당도: 8 };
+const 시금치 = { 이름: "시금치", 채소여부: true };
+function 농산물정보(농산물이름) {
+    if ('당도' in 농산물이름) {
+        console.log(`${농산물이름.이름}는 과일입니다.`);
+    }
+    if ('채소여부' in 농산물이름) {
+        console.log(`${농산물이름.이름}는 채소입니다.`);
+    }
 }
-const item1 = {
-    id: 'g001',
-    name: '서리불꽃 글러브',
-    price: 100,
-    attack: 5,
-    defence: 42,
-};
-printEquipment(item1);
+농산물정보(사과); // "사과는 과일입니다."
+농산물정보(시금치); // "시금치는 채소입니다."

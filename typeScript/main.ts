@@ -211,7 +211,7 @@ printEquipment(item2); */
 
 // 공격과 방어를 동시에(Intersection 사용하기)
 
-interface Equipment {
+/* interface Equipment {
   id: string;
   name: string;
   price: number;
@@ -239,4 +239,32 @@ const item1: Weapon & Armor = {
 };
 
 
-printEquipment(item1);
+printEquipment(item1); */
+
+// 유니온 타입 퀴즈(팀미팅)
+interface 농산물 {
+  이름 : string;
+}
+
+interface 당도 extends 농산물{
+  당도: number;
+}
+interface 채소여부 extends 농산물{
+  채소여부: boolean;
+}
+
+const 사과: 당도 = { 이름: "사과", 당도: 8 };
+const 시금치: 채소여부 = { 이름: "시금치", 채소여부: true };
+
+function 농산물정보 (농산물이름: 당도 | 채소여부 ){
+  if('당도' in 농산물이름){
+    console.log(`${농산물이름.이름}는 과일입니다.`);
+  }
+  if('채소여부' in 농산물이름){
+    console.log(`${농산물이름.이름}는 채소입니다.`);
+  }
+}
+
+
+농산물정보(사과);   // "사과는 과일입니다."
+농산물정보(시금치); // "시금치는 채소입니다."
