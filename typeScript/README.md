@@ -812,6 +812,8 @@ tsconfig/bases 예시
 }
 ```
 
+# 이하 노션에서 이어짐
+https://www.notion.so/TypeScript-1394ef56099480a78addffdf4f044615
 
 
 
