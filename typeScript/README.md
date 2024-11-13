@@ -404,3 +404,38 @@ type Review = Id & Timestamp {
 }
 ```
 > `interface`의 상속을 이용해서 표현 해줄 수도 있지만, `intersection`과 `interface의 상속`의 비교에 대해서는 후에 다루도록 하겠다.
+
+### keyof와 typeof 연산자
+- keyof 연산자란 객체 타입의 키들로 이루어진 문저열 리터럴 유니온 타입을 반환 한다. 객체의 키들을 타입으로 사용하고싶을때 유용하다.
+- 예제
+```typescript
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  membersOnly?: boolean;
+}
+
+// type ProductProperty = 'id' | 'name' | 'price' | 'membersOnly';
+// const productTableKeys: ProductProperty[] = ['name', 'price', 'membersOnly'];
+
+/* 
+위 처럼 사용하면, Product에 다른 key가 추가되었을때 수기로 작성해줘야한다는 불편함이 있다.
+그렇기에 keyof를 이용해서 넣어주면 Product에 key가 추가되어도 수기로 작성해줄 필요없이 타입으로써 사용이 가능하다.
+*/
+
+const productTableKeys: (keyof Product)[] = ['name', 'price', 'membersOnly'];
+
+```
+- typeof 연산자란 javascript에서는 런타임에서 값의 자료형을 반환하고, 해당 값의 타입을 문자열로 반환하지만
+typescript에서는 컴파일 타임에 사용되는 타입 추론 연산자로써, 변수의 타입을 가져와서 코드 내에 타입 선언에서 사용이 가능하다.
+```typescript
+// JavaScript에서의 typeof 사용
+const value = 123;
+console.log(typeof value); // "number"
+
+// TypeScript에서의 typeof 사용
+const num = 123;
+type NumType = typeof num; // NumType은 'number' 타입
+
+```
