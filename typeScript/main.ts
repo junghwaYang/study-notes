@@ -272,7 +272,7 @@ function 농산물정보 (농산물이름: 당도 | 채소여부 ){
 
 // 아이템 정보 출력하기 (keyof 연산자)
 
-interface Item {
+/* interface Item {
   id: string;
   name: string;
   price: number;
@@ -294,4 +294,11 @@ const item: Item = {
 
 for (let [propertyKey, propertyName] of itemTable) {
   console.log(`${propertyName} | ${item[propertyKey]}`);
-}
+} */
+
+// Map 자료구조 활용하기 (제네릭 타입 사용하기)
+const stock = new Map<string, number>();
+stock.set('g001', 1);
+stock.set('g002', 2);
+console.log(stock.get('g001'));
+console.log(stock.get('g002'));
