@@ -781,3 +781,37 @@ type AddToCartResult = ReturnType<typeof addToCart>;
 9. `resolveJsonModule`: JSON 파일 임포트하기
 10. `include`와 `exclude`
 11. 그 밖의 타입은 [타입스크립트 공식 문서 참고](https://www.typescriptlang.org/tsconfig/)
+
+### tsconfig.json 파일 불러오기
+아래와 같이 extends 옵션으로 원하는 설정 파일의 경로를 적어주면 tsconfig.json 파일을 불러올 수 있습니다. 그리고 추가로 옵션을 사용해서 덮어쓸 수도 있죠.
+```json
+{
+  "extends": "<설정 파일 경로>"
+}
+```
+
+tsconfig/bases 예시
+예를 들어서 권장하는 tsconfig.json 설정들을 모아놓은 [tsconfig/bases](https://github.com/tsconfig/bases) 리포지토리에 있는 설정 파일을 패키지로 설치한 다음, 불러와서 사용해 볼게요.
+1. 패키지 설치하기
+`npm install --save-dev @tsconfig/recommended`
+2. `extends` 설정하기
+```json
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+  }
+}
+```
+3. 옵션 덮어쓰기
+```json
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2016" // 이렇게 덮어쓸 옵션만 적어주면 된다.
+  }
+}
+```
+
+
+
+
